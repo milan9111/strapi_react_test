@@ -42,8 +42,13 @@ const ChatContainer: FC = () => {
       setSendingMessage(true);
       addMessageToField(EAuthorType.You, currentMessage);
       setCurrentMessage("");
-      const assistantMessage = await sendCurrentMessage(currentMessage);
-      addMessageToField(EAuthorType.Assistant, assistantMessage);
+      const data = await sendCurrentMessage(currentMessage);
+
+      if (data) {
+        const { message: assistantMessage } = data;
+        addMessageToField(EAuthorType.Assistant, assistantMessage);
+      }
+
       setSendingMessage(false);
     }
   };
