@@ -15,30 +15,36 @@ const ChatContainer: FC = () => {
     scrollToBottom();
   }, [allMessages]);
 
-  const onCurrentMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onCurrentMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCurrentMessage(e.target.value);
   };
 
-  const onPressEnter = (key: string) => {
-    if (key === "Enter") onSendCurrentMessage();
+  const onPressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey && !sendingMessage) {
+      e.preventDefault();
+      onSendCurrentMessage();
+    }
   };
 
-  const onSendCurrentMessage = () => {
-    if (currentMessage.length && !sendingMessage) {
+  const addMessageToField = (author: EAuthorType, message: string) => {
+    setAllMessages((prev) => [
+      ...prev,
+      {
+        id: new Date().getTime(),
+        author: author,
+        text: message,
+      },
+    ]);
+  };
+
+  const onSendCurrentMessage = async () => {
+    if (currentMessage.trim().length && !sendingMessage) {
       setSendingMessage(true);
-      sendCurrentMessage(currentMessage);
-      setAllMessages([
-        ...allMessages,
-        {
-          id: new Date().getTime(),
-          author: EAuthorType.You,
-          text: currentMessage,
-        },
-      ]);
+      addMessageToField(EAuthorType.You, currentMessage);
       setCurrentMessage("");
-      setTimeout(() => {
-        setSendingMessage(false);
-      }, 1000);
+      const assistantMessage = await sendCurrentMessage(currentMessage);
+      addMessageToField(EAuthorType.Assistant, assistantMessage);
+      setSendingMessage(false);
     }
   };
 

@@ -24,19 +24,24 @@ export const checkCurrentApiKey = async (
   }
 };
 
-export const sendCurrentMessage = async (message: string) => {
-    // try {
-    //     const result = await axios.post('https://api.openai.com/v1/chat/completions', {
-    //         model: "gpt-3.5-turbo-0613",
-    //         messages: [{"role": "user", "content": message}],
-    //       }, {
-    //         headers: {
-    //           'Authorization': `Bearer ${import.meta.env.VITE_GPT_KEY}`,
-    //           'Content-Type': 'application/json',
-    //         },
-    //       });
-    //       console.log(result.data.choices[0].message.content);
-    // } catch(error) {
-    //     console.error('Error fetching data:', error);
-    // }
-}
+export const sendCurrentMessage = async (message: string): Promise<string> => {
+  try {
+    const result = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-4",
+        messages: [{ role: "user", content: message }],
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_GPT_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return result.data.choices[0].message.content;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return "Error: Something went wrong! Try again, please!";
+  }
+};

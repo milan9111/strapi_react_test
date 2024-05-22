@@ -2,17 +2,17 @@ import { FC, useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Spin, notification } from "antd";
 import { checkCurrentApiKey } from "./api";
-import './app.scss';
+import "./app.scss";
 import AssistantContainer from "./pages/Assistant/AssistantContainer";
 import ForbiddenContainer from "./pages/Forbidden/ForbiddenContainer";
 
 const App: FC = () => {
-  const [isAuth, setIsAuth] = useState<boolean>(true);
-  const [checkingApiKey, setChekingApiKey] = useState<boolean>(false);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [checkingApiKey, setChekingApiKey] = useState<boolean>(true);
 
   useEffect(() => {
     const id: string = window.location.pathname.split("/").pop() as string;
-    //onCheckCurrentApiKey(id);
+    onCheckCurrentApiKey(id);
   }, []);
 
   const onCheckCurrentApiKey = async (value: string) => {
@@ -28,6 +28,7 @@ const App: FC = () => {
         notification.success({
           message: "Success!",
           description: message,
+          duration: 1,
         });
       }
     }

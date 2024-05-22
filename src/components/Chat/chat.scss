@@ -66,5 +66,12 @@
     flex-direction: row;
     align-items: center;
     gap: 20px;
+
+    &_textarea {
+      textarea {
+        height: 50px;
+        resize: none;
+      }
+    }
   }
 }
