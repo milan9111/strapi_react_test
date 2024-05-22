@@ -1,11 +1,21 @@
 .chat {
+  background-color: #ffffff;
+  border: 1px solid #1677ff;
+  border-radius: 10px;
   &__container {
     max-width: 996px;
     margin: 0 auto;
+    padding: 10px 10px 0px 10px;
 
     display: flex;
     flex-direction: column;
     height: 100vh;
+  }
+  &__title {
+    font-size: 28px;
+    text-align: center;
+    padding: 15px 0px;
+    margin-bottom: 0px;
   }
   &__field {
     flex: 1 1 0%;

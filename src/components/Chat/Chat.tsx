@@ -25,6 +25,7 @@ const Chat: FC<ChatProps> = ({
   return (
     <div className="chat">
       <div className="chat__container">
+        <p className="chat__title">Your virtual assistant</p>
         <div
           className="chat__field"
           style={!showAllMessages.length ? { justifyContent: "center" } : {}}
