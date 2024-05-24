@@ -44,13 +44,9 @@ export const DialogsSlice = createSlice({
         );
 
         if (foundDialog) {
-          if (state.selectedDialog.content.length === 1) {
-            foundDialog.content = action.payload.content;
-          } else {
-            foundDialog.content.push(
-              action.payload.content[action.payload.content.length - 1]
-            );
-          }
+          foundDialog.content.push(
+            action.payload.content[action.payload.content.length - 1]
+          );
         }
       }
     },
