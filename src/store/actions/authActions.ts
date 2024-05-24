@@ -3,7 +3,8 @@ import { notification } from "antd";
 import { AppDispatch } from "../store";
 import { requestToApi } from "../../helpers/requestToApi";
 import { ICheckCurrentApiKey } from "../../types/interfaces/IResponse";
-import { setChekingApiKey, setIsAuth } from "../reducers/AuthSlice";
+import { setChekingApiKey, setIsAuth, setUserID } from "../reducers/AuthSlice";
+import { setDialogs } from "../reducers/DialogsSlice";
 
 export const checkCurrentApiKey =
   (value: string) =>
@@ -16,9 +17,12 @@ export const checkCurrentApiKey =
       });
 
       if (data) {
-        const { success, message }: ICheckCurrentApiKey = data;
+        const { success, message, dialogs, user_id }: ICheckCurrentApiKey =
+          data;
 
         dispatch(setIsAuth(success));
+        dispatch(setUserID(user_id));
+        dispatch(setDialogs(dialogs));
 
         if (success) {
           notification.success({

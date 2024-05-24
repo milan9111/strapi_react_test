@@ -1,7 +1,8 @@
 import { EAuthorType } from "../enums/EAuthorType";
 
 export interface IChatMessage {
-  id: number;
+  id?: number;
   author: EAuthorType;
-  text: string;
+  message: string;
+  date: string;
 }
