@@ -1,12 +1,8 @@
 .chat {
   background-color: #ffffff;
   border: 1px solid #1677ff;
-  border-radius: 10px;
   &__container {
-    max-width: 996px;
-    margin: 0 auto;
     padding: 10px 10px 0px 10px;
-
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -65,17 +61,25 @@
   &__field::-webkit-scrollbar {
     display: none;
   }
+
   &__inputBox {
     width: 100%;
-    padding: 20px 10px;
-    margin-bottom: 15px;
-    background-color: #1677ff37;
-    box-shadow: #00000059 0px 5px 15px;
-    border-radius: 10px;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    gap: 20px;
+    justify-content: center;
+    &_container {
+      width: 800px;
+      padding: 20px 10px;
+      margin: 15px 0px;
+      background-color: #1677ff37;
+      box-shadow: #00000059 0px 5px 15px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
+    }
+   
 
     &_textarea {
       textarea {

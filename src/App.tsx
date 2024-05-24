@@ -1,40 +1,21 @@
-import { FC, useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Spin, notification } from "antd";
-import { checkCurrentApiKey } from "./api";
+import { FC, useEffect } from "react";
 import "./app.scss";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Spin } from "antd";
+import { useAppDispatch, useAppSelector } from "./hooks/redux";
+import { checkCurrentApiKey } from "./store/actions/authActions";
 import AssistantContainer from "./pages/Assistant/AssistantContainer";
 import ForbiddenContainer from "./pages/Forbidden/ForbiddenContainer";
 
 const App: FC = () => {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [checkingApiKey, setChekingApiKey] = useState<boolean>(true);
+  const { isAuth, checkingApiKey } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const id: string = window.location.pathname.split("/").pop() as string;
-    onCheckCurrentApiKey(id);
+    dispatch(checkCurrentApiKey(id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const onCheckCurrentApiKey = async (value: string) => {
-    setChekingApiKey(true);
-    const data = await checkCurrentApiKey(value);
-
-    if (data) {
-      const { success, message } = data;
-
-      setIsAuth(success);
-
-      if (success) {
-        notification.success({
-          message: "Success!",
-          description: message,
-          duration: 1,
-        });
-      }
-    }
-
-    setChekingApiKey(false);
-  };
 
   if (checkingApiKey) {
     return (

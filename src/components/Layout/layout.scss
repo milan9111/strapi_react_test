@@ -1,0 +1,15 @@
+.layout {
+  min-height: 100vh;
+
+  &__content {
+    background: transparent;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 100px);
+  }
+
+  &__childrenWrapper {
+    flex: 1;
+  }
+}

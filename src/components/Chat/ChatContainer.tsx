@@ -1,14 +1,20 @@
-import { FC, useState, useRef, useEffect } from "react";
+import { FC, useRef, useEffect } from "react";
 import "./chat.scss";
-import { sendCurrentMessage } from "../../api";
-import { IChatMessage } from "../../types/interfaces/IChatMessage";
-import Chat from "./Chat";
 import { EAuthorType } from "../../types/enums/EAuthorType";
+import { sendCurrentMessage } from "../../store/actions/dialogsActions";
+import {
+  addMessageToField,
+  setCurrentMessage,
+  setSendingMessage,
+} from "../../store/reducers/DialogsSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import Chat from "./Chat";
 
 const ChatContainer: FC = () => {
-  const [currentMessage, setCurrentMessage] = useState<string>("");
-  const [allMessages, setAllMessages] = useState<IChatMessage[]>([]);
-  const [sendingMessage, setSendingMessage] = useState<boolean>(false);
+  const { currentMessage, allMessages, sendingMessage } = useAppSelector(
+    (state) => state.dialogs
+  );
+  const dispatch = useAppDispatch();
   const fieldEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -16,7 +22,7 @@ const ChatContainer: FC = () => {
   }, [allMessages]);
 
   const onCurrentMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCurrentMessage(e.target.value);
+    dispatch(setCurrentMessage(e.target.value));
   };
 
   const onPressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -26,30 +32,29 @@ const ChatContainer: FC = () => {
     }
   };
 
-  const addMessageToField = (author: EAuthorType, message: string) => {
-    setAllMessages((prev) => [
-      ...prev,
-      {
+  const onAddMessageToField = (author: EAuthorType, message: string) => {
+    dispatch(
+      addMessageToField({
         id: new Date().getTime(),
         author: author,
         text: message,
-      },
-    ]);
+      })
+    );
   };
 
   const onSendCurrentMessage = async () => {
     if (currentMessage.trim().length && !sendingMessage) {
-      setSendingMessage(true);
-      addMessageToField(EAuthorType.You, currentMessage);
-      setCurrentMessage("");
-      const data = await sendCurrentMessage(currentMessage);
+      dispatch(setSendingMessage(true));
+      onAddMessageToField(EAuthorType.You, currentMessage);
+      dispatch(setCurrentMessage(""));
+      const data = await dispatch(sendCurrentMessage(currentMessage));
 
       if (data) {
         const { message: assistantMessage } = data;
-        addMessageToField(EAuthorType.Assistant, assistantMessage);
+        onAddMessageToField(EAuthorType.Assistant, assistantMessage);
       }
 
-      setSendingMessage(false);
+      dispatch(setSendingMessage(false));
     }
   };
 

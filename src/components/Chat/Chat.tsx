@@ -38,21 +38,23 @@ const Chat: FC<ChatProps> = ({
           <div ref={fieldEndRef} />
         </div>
         <div className="chat__inputBox">
-          <TextArea
-            className="chat__inputBox_textarea"
-            onChange={(e) => onCurrentMessage(e)}
-            onKeyDown={(e) => onPressEnter(e)}
-            value={currentMessage}
-            placeholder="Message assistant"
-            allowClear
-          />
-          <Button
-            type="primary"
-            onClick={() => onSendCurrentMessage()}
-            loading={sendingMessage}
-          >
-            <ArrowUpOutlined />
-          </Button>
+          <div className="chat__inputBox_container">
+            <TextArea
+              className="chat__inputBox_textarea"
+              onChange={(e) => onCurrentMessage(e)}
+              onKeyDown={(e) => onPressEnter(e)}
+              value={currentMessage}
+              placeholder="Message assistant"
+              allowClear
+            />
+            <Button
+              type="primary"
+              onClick={() => onSendCurrentMessage()}
+              loading={sendingMessage}
+            >
+              <ArrowUpOutlined />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
