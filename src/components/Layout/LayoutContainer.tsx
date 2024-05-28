@@ -1,5 +1,7 @@
 import { FC, ReactNode } from "react";
 import "./layout.scss";
+import { setShowMobileMenu } from "../../store/reducers/DialogsSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import Layout from "./Layout";
 
 interface LayoutContainerProps {
@@ -7,7 +9,18 @@ interface LayoutContainerProps {
 }
 
 const LayoutContainer: FC<LayoutContainerProps> = ({ children }) => {
-  return <Layout>{children}</Layout>;
+  const { showMobileMenu } = useAppSelector((state) => state.dialogs);
+  const dispatch = useAppDispatch();
+
+  const onShowMobileMenu = () => {
+    dispatch(setShowMobileMenu(false));
+  };
+
+  return (
+    <Layout onShowMobileMenu={onShowMobileMenu} showMobileMenu={showMobileMenu}>
+      {children}
+    </Layout>
+  );
 };
 
 export default LayoutContainer;

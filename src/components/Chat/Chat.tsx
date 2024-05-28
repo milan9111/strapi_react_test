@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { Button, Input, Empty } from "antd";
-import { ArrowUpOutlined } from "@ant-design/icons";
+import { ArrowUpOutlined, BarsOutlined } from "@ant-design/icons";
 
 interface ChatProps {
+  onShowMobileMenu: () => void;
   onCurrentMessage: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onPressEnter: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   currentMessage: string;
@@ -13,6 +14,7 @@ interface ChatProps {
 }
 
 const Chat: FC<ChatProps> = ({
+  onShowMobileMenu,
   onCurrentMessage,
   onPressEnter,
   currentMessage,
@@ -25,7 +27,17 @@ const Chat: FC<ChatProps> = ({
   return (
     <div className="chat">
       <div className="chat__container">
-        <p className="chat__title">Your virtual assistant</p>
+        <div className="chat__title">
+          <Button
+            className="chat__title_button"
+            type="primary"
+            onClick={onShowMobileMenu}
+          >
+            <BarsOutlined />
+          </Button>
+          <p className="chat__title_text">Your virtual assistant</p>
+          <div></div>
+        </div>
         <div
           className="chat__field"
           style={!showAllMessages.length ? { justifyContent: "center" } : {}}

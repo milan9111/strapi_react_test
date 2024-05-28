@@ -8,6 +8,7 @@ import {
 import {
   setDialogs,
   setSelectedDialog,
+  setShowMobileMenu,
 } from "../../store/reducers/DialogsSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import DialogsMenu from "./DialogsMenu";
@@ -19,12 +20,14 @@ const DialogsMenuContainer: FC = () => {
 
   const onCreateNewDialog = (id: number) => {
     dispatch(createNewDialog(id));
+    dispatch(setShowMobileMenu(false));
   };
 
   const onChangeSelectedDialog = (id: number) => {
     const newSelectedDialog = dialogs.find((item) => item.id === id);
     if (newSelectedDialog) {
       dispatch(setSelectedDialog(newSelectedDialog));
+      dispatch(setShowMobileMenu(false));
     }
   };
 

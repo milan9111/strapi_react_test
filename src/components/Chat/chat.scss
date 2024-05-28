@@ -8,10 +8,28 @@
     height: 100vh;
   }
   &__title {
-    font-size: 28px;
-    text-align: center;
-    padding: 15px 0px;
-    margin-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    &_button {
+      visibility: hidden;
+      @media (max-width: 768px) {
+        visibility: visible;
+      }
+    }
+
+    &_text {
+      font-size: 28px;
+      padding: 15px 0px;
+      margin-bottom: 0px;
+
+      @media (max-width: 768px) {
+        font-size: 24px;
+      }
+    }
   }
   &__field {
     flex: 1 1 0%;
@@ -79,7 +97,6 @@
       align-items: center;
       gap: 20px;
     }
-   
 
     &_textarea {
       textarea {

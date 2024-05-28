@@ -12,4 +12,18 @@
   &__childrenWrapper {
     flex: 1;
   }
+
+  &__menu {
+    display: block;
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__mobileMenu {
+    display: none;
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
 }

@@ -6,6 +6,7 @@ export interface IDialogsSlice {
   selectedDialog: IDialog | null;
   currentMessage: string;
   sendingMessage: boolean;
+  showMobileMenu: boolean;
 }
 
 const initialState: IDialogsSlice = {
@@ -13,6 +14,7 @@ const initialState: IDialogsSlice = {
   selectedDialog: null,
   currentMessage: "",
   sendingMessage: false,
+  showMobileMenu: false,
 };
 
 export const DialogsSlice = createSlice({
@@ -66,6 +68,12 @@ export const DialogsSlice = createSlice({
     ): void {
       state.sendingMessage = action.payload;
     },
+    setShowMobileMenu(
+      state: IDialogsSlice,
+      action: PayloadAction<boolean>
+    ): void {
+      state.showMobileMenu = action.payload;
+    },
   },
 });
 
@@ -76,5 +84,6 @@ export const {
   addNewDialog,
   setCurrentMessage,
   setSendingMessage,
+  setShowMobileMenu,
 } = DialogsSlice.actions;
 export default DialogsSlice.reducer;

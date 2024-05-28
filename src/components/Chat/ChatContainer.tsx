@@ -9,6 +9,7 @@ import {
 import {
   setCurrentMessage,
   setSendingMessage,
+  setShowMobileMenu,
 } from "../../store/reducers/DialogsSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import Chat from "./Chat";
@@ -45,6 +46,10 @@ const ChatContainer: FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDialog, pendingMessage]);
+
+  const onShowMobileMenu = () => {
+    dispatch(setShowMobileMenu(true));
+  }
 
   const onCurrentMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(setCurrentMessage(e.target.value));
@@ -139,6 +144,7 @@ const ChatContainer: FC = () => {
 
   return (
     <Chat
+      onShowMobileMenu={onShowMobileMenu}
       onCurrentMessage={onCurrentMessage}
       onPressEnter={onPressEnter}
       currentMessage={currentMessage}
